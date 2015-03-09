@@ -12,9 +12,9 @@ func TestGenerateCharacters(t *testing.T) {
 		in	string
 		out	[]string
 	}{
-		{``,						[]string{``}},
-		{`a`,						[]string{`a`}},
-		{`abc`,						[]string{`abc`}},
+		{``,                        []string{``}},
+		{`a`,                       []string{`a`}},
+		{`abc`,                     []string{`abc`}},
 	}
 
 	for _, pair := range expected {
@@ -37,16 +37,16 @@ func TestGenerateCharacterSets(t *testing.T) {
 		in	string
 		out	[]string
 	}{
-		{`[0-4]`,					[]string{`0`, `1`, `2`, `3`, `4`}},
-		{`[\s]`,					[]string{}},
-		{`[\W]`,					[]string{`-`, `.`}},
-		{`[^\D\d]`,					[]string{}},
-		{`[^\S\s]`,					[]string{}},
-		{`[^\S]`,					[]string{}},
-		{`[^\W\w]`,					[]string{}},
-		{`[^\w]`,					[]string{`-`, `.`}},
-		{`[abc]`,					[]string{`a`, `b`, `c`}},
-		{`\W`,						[]string{`-`, `.`}},
+		{`[0-4]`,                   []string{`0`, `1`, `2`, `3`, `4`}},
+		{`[\s]`,                    []string{}},
+		{`[\W]`,                    []string{`-`, `.`}},
+		{`[^\D\d]`,                 []string{}},
+		{`[^\S\s]`,                 []string{}},
+		{`[^\S]`,                   []string{}},
+		{`[^\W\w]`,                 []string{}},
+		{`[^\w]`,                   []string{`-`, `.`}},
+		{`[abc]`,                   []string{`a`, `b`, `c`}},
+		{`\W`,                      []string{`-`, `.`}},
 	}
 
 	for _, pair := range expected {
@@ -69,16 +69,16 @@ func TestGenerateRepetition(t *testing.T) {
 		in	string
 		out	[]string
 	}{
-		{`[ab]{0,2}?`,				[]string{``, `a`, `aa`, `ab`, `b`, `ba`, `bb`}},
-		{`[ab]{0,2}`,				[]string{``, `a`, `aa`, `ab`, `b`, `ba`, `bb`}},
-		{`[ab]{1,2}?`,				[]string{`a`, `aa`, `ab`, `b`, `ba`, `bb`}},
-		{`[ab]{1,2}`,				[]string{`a`, `aa`, `ab`, `b`, `ba`, `bb`}},
-		{`\s{0,}`,					[]string{``}},
-		{`\s{2,}`,					[]string{}},
-		{`a\b{0,}`,					[]string{`a`, `a`, `a`, `a`}},
-		{`ab*`,						[]string{`a`, `ab`, `abb`, `abbb`}},
-		{`ab+`,						[]string{`ab`, `abb`, `abbb`, `abbbb`}},
-		{`ab?`,						[]string{`a`, `ab`}},
+		{`[ab]{0,2}?`,              []string{``, `a`, `aa`, `ab`, `b`, `ba`, `bb`}},
+		{`[ab]{0,2}`,               []string{``, `a`, `aa`, `ab`, `b`, `ba`, `bb`}},
+		{`[ab]{1,2}?`,              []string{`a`, `aa`, `ab`, `b`, `ba`, `bb`}},
+		{`[ab]{1,2}`,               []string{`a`, `aa`, `ab`, `b`, `ba`, `bb`}},
+		{`\s{0,}`,                  []string{``}},
+		{`\s{2,}`,                  []string{}},
+		{`a\b{0,}`,                 []string{`a`, `a`, `a`, `a`}},
+		{`ab*`,                     []string{`a`, `ab`, `abb`, `abbb`}},
+		{`ab+`,                     []string{`ab`, `abb`, `abbb`, `abbbb`}},
+		{`ab?`,                     []string{`a`, `ab`}},
 	}
 
 	for _, pair := range expected {
@@ -101,15 +101,15 @@ func TestGenerateAlternationAndGrouping(t *testing.T) {
 		in	string
 		out	[]string
 	}{
-		{`(a)`,						[]string{`a`}},
-		{`[0101]?[0-3]?`,			[]string{``, `0`, `1`, `2`, `3`, `0`, `00`, `01`, `02`, `03`, `1`, `10`, `11`, `12`, `13`}},
-		{`[01]?[01]?`,				[]string{``, `0`, `1`, `0`, `00`, `01`, `1`, `10`, `11`}},
-		{`[01]?[01]`,				[]string{`0`, `1`, `00`, `01`, `10`, `11`}},
-		{`forever|(old|young)?`,	[]string{`forever`, ``, `old`, `young`}},
-		{`forever|(old|young)`,		[]string{`forever`, `old`, `young`}},
-		{`forever|young`,			[]string{`forever`, `young`}},
-		{`|`,						[]string{``}},
-		{`|a`,						[]string{``, `a`}},
+		{`(a)`,                     []string{`a`}},
+		{`[0101]?[0-3]?`,           []string{``, `0`, `1`, `2`, `3`, `0`, `00`, `01`, `02`, `03`, `1`, `10`, `11`, `12`, `13`}},
+		{`[01]?[01]?`,              []string{``, `0`, `1`, `0`, `00`, `01`, `1`, `10`, `11`}},
+		{`[01]?[01]`,               []string{`0`, `1`, `00`, `01`, `10`, `11`}},
+		{`forever|(old|young)?`,    []string{`forever`, ``, `old`, `young`}},
+		{`forever|(old|young)`,     []string{`forever`, `old`, `young`}},
+		{`forever|young`,           []string{`forever`, `young`}},
+		{`|`,                       []string{``}},
+		{`|a`,                      []string{``, `a`}},
 	}
 
 	for _, pair := range expected {
