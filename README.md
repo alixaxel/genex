@@ -2,6 +2,10 @@
 
 Genex package for Go
 
+Easy and efficient package to expand any given regex into all the possible strings that it can match.
+
+This is the code that powers [namegrep](https://namegrep.com/).
+
 ## Usage
 
 ```go
@@ -9,9 +13,9 @@ package main
 
 import (
     "fmt"
-	"regexp/syntax"
+    "regexp/syntax"
 
-	"github.com/alixaxel/genex"
+    "github.com/alixaxel/genex"
 )
 
 func main() {
@@ -21,10 +25,53 @@ func main() {
     	fmt.Println("Count:", genex.Count(input, charset, 3))
 
     	genex.Generate(input, charset, 3, func(output string) {
-    		fmt.Println(output)
+    		fmt.Println("[*]", output)
     	})
     }
 }
+```
+
+## Output
+
+```
+Count: 120
+
+[*] foo0
+[*] ...
+[*] foo9
+[*] foofoo0
+[*] ...
+[*] foofoo9
+[*] foobar0
+[*] ...
+[*] foobar9
+[*] foobaz0
+[*] ...
+[*] foobaz9
+[*] bar0
+[*] ...
+[*] bar9
+[*] barfoo0
+[*] ...
+[*] barfoo9
+[*] barbar0
+[*] ...
+[*] barbar9
+[*] barbaz0
+[*] ...
+[*] barbaz9
+[*] baz0
+[*] ...
+[*] baz9
+[*] bazfoo0
+[*] ...
+[*] bazfoo9
+[*] bazbar0
+[*] ...
+[*] bazbar9
+[*] bazbaz0
+[*] ...
+[*] bazbaz9
 ```
 
 ## Install
