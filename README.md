@@ -1,4 +1,4 @@
-# genex
+# genex [![GoDoc](https://godoc.org/github.com/alixaxel/genex?status.svg)](https://godoc.org/github.com/alixaxel/genex)
 
 Genex package for Go
 
