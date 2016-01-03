@@ -5,7 +5,7 @@ import (
 	"regexp/syntax"
 )
 
-// Computes the total number of matches the `input` regex would generate after whitelisting `charset`.
+// Count computes the total number of matches the `input` regex would generate after whitelisting `charset`.
 // The `infinite` argument caps the maximum boundary of repetition operators.
 func Count(input, charset *syntax.Regexp, infinite int) float64 {
 	var count func(input, charset *syntax.Regexp, infinite int) float64

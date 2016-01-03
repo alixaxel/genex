@@ -139,6 +139,26 @@ func TestCountRepetitionWithHigherInfinity(t *testing.T) {
 	}
 }
 
+func TestCountRepetitionWithUnlimitedInfinity(t *testing.T) {
+	charset, _ := syntax.Parse(`[0-9a-zA-Z-._]`, syntax.Perl)
+	expected := []struct{
+		in	string
+		out	float64
+	}{
+		{`ab*`,                     math.Inf(1)},
+		{`ab+`,                     math.Inf(1)},
+	}
+
+	for _, pair := range expected {
+		in, _ := syntax.Parse(pair.in, syntax.Perl)
+		value := Count(in, charset, int(math.Inf(1)))
+
+		if value != pair.out {
+			t.Error("For", pair.in, "expected", pair.out, "but got", value)
+		}
+	}
+}
+
 func TestCountAlternationAndGrouping(t *testing.T) {
 	charset, _ := syntax.Parse(`[0-9a-zA-Z-._]`, syntax.Perl)
 	expected := []struct{
@@ -155,6 +175,25 @@ func TestCountAlternationAndGrouping(t *testing.T) {
 		{`|\b`,                     2},
 		{`|`,                       1},
 		{`|a`,                      2},
+	}
+
+	for _, pair := range expected {
+		in, _ := syntax.Parse(pair.in, syntax.Perl)
+		value := Count(in, charset, 3)
+
+		if value != pair.out {
+			t.Error("For", pair.in, "expected", pair.out, "but got", value)
+		}
+	}
+}
+
+func TestInvalidCharset(t *testing.T) {
+	charset, _ := syntax.Parse(`^$`, syntax.Perl)
+	expected := []struct{
+		in	string
+		out	float64
+	}{
+		{``,                        1},
 	}
 
 	for _, pair := range expected {

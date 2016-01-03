@@ -5,7 +5,7 @@ import (
 	"regexp/syntax"
 )
 
-// Generates all the strings that match the `input` regex after whitelisting `charset`.
+// Generate yields all the strings that match the `input` regex after whitelisting `charset`.
 // The `infinite` argument caps the maximum boundary of repetition operators.
 func Generate(input, charset *syntax.Regexp, infinite int, callback func(string)) {
 	var generate func(input, charset *syntax.Regexp, infinite int) _Iterator
