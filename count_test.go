@@ -1,6 +1,7 @@
 package genex
 
 import (
+	"math"
 	"regexp/syntax"
 	"testing"
 )
@@ -187,7 +188,7 @@ func TestCountAlternationAndGrouping(t *testing.T) {
 	}
 }
 
-func TestInvalidCharset(t *testing.T) {
+func TestCountInvalidCharset(t *testing.T) {
 	charset, _ := syntax.Parse(`^$`, syntax.Perl)
 	expected := []struct{
 		in	string
