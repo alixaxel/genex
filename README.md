@@ -1,4 +1,4 @@
-# genex [![GoDoc](https://godoc.org/github.com/alixaxel/genex?status.svg)](https://godoc.org/github.com/alixaxel/genex) [![GoCover](http://gocover.io/_badge/github.com/alixaxel/genex)](http://gocover.io/github.com/alixaxel/genex)
+# genex [![GoDoc](https://godoc.org/github.com/alixaxel/genex?status.svg)](https://godoc.org/github.com/alixaxel/genex) [![GoCover](http://gocover.io/_badge/github.com/alixaxel/genex)](http://gocover.io/github.com/alixaxel/genex) [![Go Report Card](https://goreportcard.com/badge/github.com/alixaxel/genex)](https://goreportcard.com/report/github.com/alixaxel/genex)
 
 Genex package for Go
 

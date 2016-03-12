@@ -14,76 +14,76 @@ func Generate(input, charset *syntax.Regexp, infinite int, callback func(string)
 		result := []_Iterator{}
 
 		switch input.Op {
-			case syntax.OpStar, syntax.OpPlus, syntax.OpQuest, syntax.OpRepeat:
-				value := []_Iterator{}
+		case syntax.OpStar, syntax.OpPlus, syntax.OpQuest, syntax.OpRepeat:
+			value := []_Iterator{}
 
-				for _, sub := range input.Sub {
-					value = append(value, generate(sub, charset, infinite))
-				}
+			for _, sub := range input.Sub {
+				value = append(value, generate(sub, charset, infinite))
+			}
 
-				switch input.Op {
-					case syntax.OpStar:
-						input.Min = 0
-						input.Max = -1
+			switch input.Op {
+			case syntax.OpStar:
+				input.Min = 0
+				input.Max = -1
 
-					case syntax.OpPlus:
-						input.Min = 1
-						input.Max = -1
+			case syntax.OpPlus:
+				input.Min = 1
+				input.Max = -1
 
-					case syntax.OpQuest:
-						input.Min = 0
-						input.Max = 1
-				}
+			case syntax.OpQuest:
+				input.Min = 0
+				input.Max = 1
+			}
 
-				if input.Max == -1 && infinite >= 0 {
-					input.Max = input.Min + infinite
-				}
+			if input.Max == -1 && infinite >= 0 {
+				input.Max = input.Min + infinite
+			}
 
-				result = append(result, _NewRepeat(_NewStack(value), input.Min, input.Max))
+			result = append(result, _NewRepeat(_NewStack(value), input.Min, input.Max))
 
-			case syntax.OpCharClass, syntax.OpAnyCharNotNL, syntax.OpAnyChar:
-				if input.Op != syntax.OpCharClass {
-					input = charset
-				}
+		case syntax.OpCharClass, syntax.OpAnyCharNotNL, syntax.OpAnyChar:
+			if input.Op != syntax.OpCharClass {
+				input = charset
+			}
 
-				data := []string{}
+			data := []string{}
 
-				for i := 0; i < len(input.Rune); i += 2 {
-					for j := 0; j < len(charset.Rune); j += 2 {
-						bounds := []rune{
-							rune(math.Max(float64(input.Rune[i]), float64(charset.Rune[j]))),
-							rune(math.Min(float64(input.Rune[i + 1]), float64(charset.Rune[j + 1]))),
-						}
+			for i := 0; i < len(input.Rune); i += 2 {
+				for j := 0; j < len(charset.Rune); j += 2 {
+					bounds := []rune{
+						rune(math.Max(float64(input.Rune[i]), float64(charset.Rune[j]))),
+						rune(math.Min(float64(input.Rune[i+1]), float64(charset.Rune[j+1]))),
+					}
 
-						if bounds[0] <= bounds[1] {
-							for char := bounds[0]; char <= bounds[1]; char++ {
-								data = append(data, string(char))
-							}
+					if bounds[0] <= bounds[1] {
+						for char := bounds[0]; char <= bounds[1]; char++ {
+							data = append(data, string(char))
 						}
 					}
 				}
+			}
 
-				result = append(result, _NewSet(data))
+			result = append(result, _NewSet(data))
 
-			case syntax.OpCapture, syntax.OpConcat:
-				for _, sub := range input.Sub {
-					result = append(result, generate(sub, charset, infinite))
-				}
+		case syntax.OpCapture, syntax.OpConcat:
+			for _, sub := range input.Sub {
+				result = append(result, generate(sub, charset, infinite))
+			}
 
-			case syntax.OpAlternate:
-				options := []_Iterator{}
+		case syntax.OpAlternate:
+			options := []_Iterator{}
 
-				for _, sub := range input.Sub {
-					options = append(options, generate(sub, charset, infinite))
-				}
+			for _, sub := range input.Sub {
+				options = append(options, generate(sub, charset, infinite))
+			}
 
-				result = append(result, _NewOption(options))
+			result = append(result, _NewOption(options))
 
-			case syntax.OpLiteral:
-				result = append(result, _NewSet([]string{string(input.Rune)}))
+		case syntax.OpLiteral:
+			result = append(result, _NewSet([]string{string(input.Rune)}))
 
-			default:
-				result = append(result, _NewSet([]string{""}))
+		default:
+			result = append(result, _NewSet([]string{""}))
 		}
 
 		return _NewStack(result)
@@ -109,7 +109,7 @@ type _Iterator interface {
 }
 
 type _Set struct {
-	i int
+	i    int
 	data []string
 }
 
@@ -154,7 +154,7 @@ func (this *_Stack) rewind() {
 }
 
 func (this *_Stack) valid() bool {
-	return this.data[0].valid();
+	return this.data[0].valid()
 }
 
 func (this *_Stack) current() string {
@@ -170,11 +170,13 @@ func (this *_Stack) current() string {
 func (this *_Stack) next() {
 	if this.valid() {
 		i := len(this.data)
-		i--; this.data[i].next()
+		i--
+		this.data[i].next()
 
 		for i > 0 && !this.data[i].valid() {
 			this.data[i].rewind()
-			i--; this.data[i].next()
+			i--
+			this.data[i].next()
 		}
 	}
 }
@@ -194,7 +196,7 @@ func _NewStack(data []_Iterator) *_Stack {
 }
 
 type _Option struct {
-	i int
+	i    int
 	data []_Iterator
 }
 
@@ -247,7 +249,7 @@ func _NewRepeat(data _Iterator, min int, max int) *_Stack {
 
 	if max > min {
 		stack = append(stack, _NewOption([]_Iterator{
-			_NewSet([]string{""}), _NewRepeat(data, 1, max - min),
+			_NewSet([]string{""}), _NewRepeat(data, 1, max-min),
 		}))
 	}
 
