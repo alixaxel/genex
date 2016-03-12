@@ -148,6 +148,7 @@ func TestCountRepetitionWithUnlimitedInfinity(t *testing.T) {
 	}{
 		{`a(b|c)*`, math.Inf(1)},
 		{`a(b|c)+`, math.Inf(1)},
+		{`a(b|c){1,}`, math.Inf(1)},
 	}
 
 	for _, pair := range expected {
