@@ -131,17 +131,23 @@ func TestGenerateInvalidCharset(t *testing.T) {
 	charset, _ := syntax.Parse(`^$`, syntax.Perl)
 	expected := []struct {
 		in  string
-		out float64
+		out []string
 	}{
-		{``, 1},
+		{``, []string{``}},
+		{`a`, []string{`a`}},
+		{`abc`, []string{`abc`}},
 	}
 
 	for _, pair := range expected {
 		in, _ := syntax.Parse(pair.in, syntax.Perl)
-		value := Count(in, charset, 3)
+		values := []string{}
 
-		if value != pair.out {
-			t.Error("For", pair.in, "expected", pair.out, "but got", value)
+		Generate(in, charset, 3, func(output string) {
+			values = append(values, output)
+		})
+
+		if reflect.DeepEqual(values, pair.out) != true {
+			t.Error("For", pair.in, "expected", pair.out, "but got", values)
 		}
 	}
 }
