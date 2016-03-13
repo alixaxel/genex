@@ -122,6 +122,7 @@ func TestCountRepetitionWithHigherInfinity(t *testing.T) {
 		{`\d{3,4}`, 11000},
 		{`\d{4,4}`, 10000},
 		{`\d{5}`, 100000},
+		{`\d{500,999}`, math.Inf(1)},
 		{`\s{0,}`, 513},
 		{`\s{2,}`, 513},
 		{`a\b{0,}`, 513},
